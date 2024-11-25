@@ -1,0 +1,90 @@
+{% load static tailwind_tags %}
+{% tailwind_css %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeStory</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+</head>
+
+<body class="bg-background lg:text-[18px] flex flex-col">
+    <header class="border-primary border-b-2 ">
+        <nav class="px-4 py-3 flex justify-between items-center relative w-[95%] m-auto">
+            <!-- Logo -->
+            <a href="{% url 'Home:index'%}"><div class="w-[50px]"><img src="/static/svg/logo.svg" alt="logo"></div></a>
+
+            <!-- Menu Icon for Mobile -->
+            <div id="menu-icon" class="md:hidden cursor-pointer">
+                <img src="/static/svg/menu.svg" alt="menu icon">
+            </div>
+
+            <!-- Menu for Mobile -->
+            <div id="mobile-menu"
+                class="md:hidden bg-background absolute z-10 w-full left-0 top-[75px] flex flex-col p-5 border-primary border-2 gap-4">
+                <a href="{% url 'Home:index'%}" class="hover:text-gray-400  focus:opacity-50">Home</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:logout'%}" class="hover:text-gray-400 focus:opacity-50">Logout</a>
+                {% else %}
+                <a href="{% url 'users:login'%}" class="hover:text-gray-400 focus:opacity-50">Login</a>
+                <a href="{% url 'users:register'%}" class="hover:text-gray-400 focus:opacity-50">Register</a>
+                <a href="{% url 'Home:all_recipe'%}" class="hover:text-gray-400 focus:opacity-50">Recipes</a>
+                <a href="/#contact" class="hover:text-gray-400 focus:opacity-50">Contact</a>
+                {% endif %}
+            </div>
+
+            <!-- Navigation Links -->
+            <div id="nav-links" class="hidden md:flex space-x-6">
+                <a href="{% url 'Home:index'%}" class="hover:text-gray-400  focus:opacity-50">Home</a>
+                {% if user.is_authenticated %}
+                <a href="#about" class="hover:text-gray-400  focus:opacity-50">Logout</a>
+                {% else %}
+                <a href="{% url 'users:login'%}" class="hover:text-gray-400  focus:opacity-50">Login</a>
+                <a href="{% url 'users:register'%}" class="hover:text-gray-400 focus:opacity-50">Register</a>
+                <a href="{% url 'Home:all_recipe'%}" class="hover:text-gray-400 focus:opacity-50">Recipes</a>
+                <a href="/#contact" class="hover:text-gray-400">Contact</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main class="grow">
+        {% block content %}
+
+    {% endblock content %}
+    </main>
+
+    <footer id="contact" class="text-center py-[33px] px-[9px] border-primary border-t-2">
+        <p>Copyright belongs to kitchen private limited @2014</p>
+        <div class="flex gap-2 justify-center mt-5">
+            <div>
+                <img src="/static/svg/instagram.svg" alt="" class="size-6 hover:opacity-50 focus:opacity-50">
+            </div>
+            <div>
+                <img src="/static/svg/linkedin.svg" alt="" class="size-6 hover:opacity-50 focus:opacity-50">
+            </div>
+            <div>
+                <img src="/static/svg/facebook.svg" alt="" class="size-6 hover:opacity-50 focus:opacity-50">
+            </div>
+            <div>
+                <img src="/static/svg/twitter.svg" alt="" class="size-5 hover:opacity-50 focus:opacity-50">
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for toggling mobile menu
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuIcon.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Update Recipe</h1>
+<p>Hello {{ user.username }}</p>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="recipe_name">Name</label>
+    <input type="text" id="recipe_name" value="{{recipe.recipe_name}}" name="recipe_name">
+
+    <label for="recipe_description">Description</label>
+    <textarea id="recipe_description" name="recipe_description">{{recipe.recipe_description}}</textarea>
+
+    <label for="recipe_img">Recipe Image</label>
+    <input type="file" id="recipe_img" name="recipe_img">
+
+    <button type="submit">Update Recipe</button>
+</form>
+
+{% endblock content %}
+
+

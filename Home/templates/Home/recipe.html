@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="w-[95%] mx-auto md:w-[750px] lg:w-[1000px] my-14">
+        <h1 class="text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-8">{{recipe.recipe_name}}</h1>
+        <p class="italic opacity-60">{{recipe.user}}</p>
+        <p class="italic opacity-60 mb-4 md:mb-8">{{recipe.created_at}}</p>
+        <div class="my-8" >
+            {% if recipe.recipe_img %}
+            <img src="{{recipe.recipe_img.url}}" alt="{{recipe.recipe_name}} image" class="border-primary border-2">
+            {% endif %}
+        </div>
+        <p>{{recipe.recipe_description}}</p>
+    </div>
+{% endblock content %}

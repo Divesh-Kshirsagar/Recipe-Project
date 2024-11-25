@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create Recipe</h1>
+<p>Hello {{ user.username }}</p>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+</ul>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="recipe_name">Name</label>
+    <input type="text" id="recipe_name" name="recipe_name">
+
+    <label for="recipe_description">Description</label>
+    <textarea id="recipe_description" name="recipe_description"></textarea>
+
+    <label for="recipe_img">Recipe Image</label>
+    <input type="file" id="recipe_img" name="recipe_img">
+
+    <button type="submit">Add Recipe</button>
+</form>
+
+<hr>
+
+{% if recipes %}
+<h2>Your Recipes</h2>
+{% for recipe in recipes %}
+<div>
+    <h3>{{ recipe.recipe_name }}</h3>
+    <p>{{ recipe.created_at }}</p>
+    <p>{{ recipe.recipe_description|truncatechars:500 }}</p>
+    <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}" style="max-width: 300px;">
+    <div>
+        <form action="{% url 'Home:delete_recipe' recipe.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" >Delete</button>
+        </form>
+        <a href="{% url 'Home:update_recipe' recipe.id %}">Update</a>
+        
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<p>Add recipes so they will be shown here.</p>
+{% endif %}
+
+
+{% if recipes.has_previous %}
+<a href="?page={{ recipes.previous_page_number }}">Previous</a>
+{% endif %}
+
+<span>Page {{ recipes.number }} of {{ recipes.paginator.num_pages }}</span>
+
+{% if recipes.has_next %}
+<a href="?page={{ recipes.next_page_number }}">Next</a>
+{% endif %}
+{% endblock content %}
+
+

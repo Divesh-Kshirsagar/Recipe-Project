@@ -1,0 +1,7 @@
+db.sqlite3
+env
+staticfiles
+*/migrations/
+*/__pycache__/
+media
+.vscode

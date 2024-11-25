@@ -1,0 +1,40 @@
+@font-face {
+    font-family: Patrick_Hand;
+    src: url('/static/fonts/PatrickHand-Regular.ttf') format('truetype');
+  }
+
+:root {
+    --primary-color: #3D550C;
+    --secondary-color: black;
+    --bg-color: #FFFEE6;
+}
+
+
+/*Model Fixes
+-----------------------------------------------*/
+html{
+    box-sizing: border-box;
+    height: 100%;
+}
+
+*, *:before, *:after{
+    box-sizing: inherit;
+}
+
+body{
+    margin: 0%;
+    height: 100%;
+}
+
+
+/*Global styles
+-----------------------------------------------*/
+html{
+    font-size: 16px;
+    font-family: Patrick_Hand;
+}
+
+img{
+    width: 100%;
+    height: auto;
+}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-8 text-center uppercase">All Recipes</h1>
+
+    {% if recipes %}
+    <div class="w-[95%] m-auto">
+
+        {% for recipe in recipes %}
+        <div class="border-primary border-2 px-4 py-8 mb-4 md:mb-8">
+            <a href="{% url 'Home:recipe' recipe.id %} " class="md:grid md:grid-cols-[1.5fr_0.5fr]">
+                <div>
+                    <h3 class="text-xl md:text-2xl lg:text-3xl mb-3">{{ recipe.recipe_name }}</h3>
+                    <p class="mb-3">{{ recipe.recipe_description|truncatechars:400 }}</p>
+                    <p class="italic opacity-60">{{ recipe.user.first_name }} {{ recipe.user.last_name }} - {{ recipe.user }}</p>
+                    <p class="italic opacity-60">{{recipe.created_at}}</p>
+                </div>
+                <div class="">
+                    {% if recipe.recipe_img %}
+                    <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}" class="mb-3 border-primary border-2">
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <p>No recipes available yet. Stay tuned for updates!</p>
+    {% endif %}
+</div>
+
+<div class="w-[95%] mx-auto px-4 my-8">
+    {% if recipes.has_previous %}
+    <a href="?page={{ recipes.previous_page_number }}" class="text-primary underline mr-4">Previous</a>
+    {% endif %}
+
+    <span class="mr-4">Page {{ recipes.number }} of {{ recipes.paginator.num_pages }}</span>
+
+    {% if recipes.has_next %}
+    <a href="?page={{ recipes.next_page_number }}" class="text-primary underline">Next</a>
+    {% endif %}
+</div>
+{% endblock content %}
