@@ -1,63 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Create Recipe</h1>
-<p>Hello {{ user.username }}</p>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-</ul>
-{% endif %}
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="recipe_name">Name</label>
-    <input type="text" id="recipe_name" name="recipe_name">
+<div class="flex justify-center">
+    <div class="container px-4 py-8 w-[80%]">
+        <h1 class="text-3xl font-bold mb-6 text-center">Create Recipe</h1>
+        <p class="text-lg mb-4 text-center">Hello, {{ user.username }}</p>
 
-    <label for="recipe_description">Description</label>
-    <textarea id="recipe_description" name="recipe_description"></textarea>
+        {% if messages %}
+        <ul class="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+        </ul>
+        {% endif %}
 
-    <label for="recipe_img">Recipe Image</label>
-    <input type="file" id="recipe_img" name="recipe_img">
-
-    <button type="submit">Add Recipe</button>
-</form>
-
-<hr>
-
-{% if recipes %}
-<h2>Your Recipes</h2>
-{% for recipe in recipes %}
-<div>
-    <h3>{{ recipe.recipe_name }}</h3>
-    <p>{{ recipe.created_at }}</p>
-    <p>{{ recipe.recipe_description|truncatechars:500 }}</p>
-    <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}" style="max-width: 300px;">
-    <div>
-        <form action="{% url 'Home:delete_recipe' recipe.id %}" method="post">
+        <form action="" method="post" enctype="multipart/form-data" class="max-w-lg mb-8 mx-auto">
             {% csrf_token %}
-            <button type="submit" >Delete</button>
+            <div class="mb-4">
+                <label for="recipe_name" class="block text-gray-700 font-bold mb-2">Name</label>
+                <input type="text" id="recipe_name" name="recipe_name"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="recipe_description" class="block text-gray-700 font-bold mb-2">Description</label>
+                <textarea id="recipe_description" name="recipe_description"
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500 h-32"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="recipe_img" class="block text-gray-700 font-bold mb-2">Recipe Image</label>
+                <input type="file" id="recipe_img" name="recipe_img" class="w-full">
+            </div>
+
+            <button type="submit"
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">Add
+                Recipe</button>
         </form>
-        <a href="{% url 'Home:update_recipe' recipe.id %}">Update</a>
-        
+
+        <hr class="my-8">
+
+        {% if recipes %}
+        <h2 class="text-2xl font-bold mb-6 text-center">Your Recipes</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for recipe in recipes %}
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold mb-2">{{ recipe.recipe_name }}</h3>
+                <p class="text-gray-600 text-sm mb-2">{{ recipe.created_at }}</p>
+                <p class="text-gray-700 mb-4">{{ recipe.recipe_description|truncatechars:500 }}</p>
+                <img src="{{ recipe.recipe_img.url }}" alt="{{ recipe.recipe_name }}"
+                    class="w-full h-48 object-cover rounded-lg mb-4">
+                <div class="flex space-x-4">
+                    <form action="{% url 'Home:delete_recipe' recipe.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200">Delete</button>
+                    </form>
+                    <a href="{% url 'Home:update_recipe' recipe.id %}"
+                        class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200">Update</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-gray-700 text-center">Add recipes so they will be shown here.</p>
+        {% endif %}
+
+        <div class="flex justify-center items-center space-x-4 mt-8">
+            {% if recipes %}
+            {% if recipes.has_previous %}
+            <a href="?page={{ recipes.previous_page_number }}"
+                class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-200">Previous</a>
+            {% endif %}
+
+            <span class="text-gray-700">Page {{ recipes.number }} of {{ recipes.paginator.num_pages }}</span>
+
+            {% if recipes.has_next %}
+            <a href="?page={{ recipes.next_page_number }}"
+                class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-200">Next</a>
+            {% endif %}
+            {% endif %}
+        </div>
     </div>
 </div>
-{% endfor %}
-{% else %}
-<p>Add recipes so they will be shown here.</p>
-{% endif %}
-
-
-{% if recipes.has_previous %}
-<a href="?page={{ recipes.previous_page_number }}">Previous</a>
-{% endif %}
-
-<span>Page {{ recipes.number }} of {{ recipes.paginator.num_pages }}</span>
-
-{% if recipes.has_next %}
-<a href="?page={{ recipes.next_page_number }}">Next</a>
-{% endif %}
 {% endblock content %}
-
-

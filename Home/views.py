@@ -4,6 +4,7 @@ from .models import Recipe
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
 
 
 def index(request):
@@ -54,6 +55,7 @@ def recipe(request, id):
     context = {'recipe':recipe}
     return render(request, 'Home/recipe.html', context)
 
+@login_required
 def delete_recipe(request, id):
     recipe = get_object_or_404(Recipe, id=id, user=request.user)
     
@@ -62,6 +64,7 @@ def delete_recipe(request, id):
         messages.success(request, 'Post deleted successfully.')
     return redirect('Home:user_recipe')
 
+@login_required
 def update_recipe(request, id):
     recipe = get_object_or_404(Recipe, id=id, user=request.user)
     data = request.POST
@@ -80,3 +83,8 @@ def update_recipe(request, id):
         return redirect('/user_recipe')
     context = {'recipe':recipe}
     return render(request, 'Home/update_recipe.html', context)
+
+
+
+
+

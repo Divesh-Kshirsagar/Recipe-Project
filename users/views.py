@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 
 APP_NAME = 'users'
 
 def login_page(request):
+    if request.user.is_authenticated:  # Check if the user is logged in
+        return redirect('/')  
     data = request.POST
     if request.method == "POST":
         username = data.get('username')
@@ -28,6 +32,8 @@ def login_page(request):
 
 
 def register_page(request):
+    if request.user.is_authenticated:  # Check if the user is logged in
+        return redirect('/')  
     data = request.POST
     if request.method == "POST":
         first_name = data.get('first_name')
@@ -61,3 +67,9 @@ def register_page(request):
         return redirect('Home:index')
     
     return render(request, 'users/register.html')
+
+
+@login_required
+def logout_page(request):
+    logout(request)
+    return redirect('users:login')

@@ -11,19 +11,33 @@
 </ul>
 {% endif %}
 
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="recipe_name">Name</label>
-    <input type="text" id="recipe_name" value="{{recipe.recipe_name}}" name="recipe_name">
+<div class="max-w-2xl mx-auto p-4">
+    <form action="" method="post" enctype="multipart/form-data" class="flex flex-col space-y-4">
+        {% csrf_token %}
+        <div class="flex flex-col space-y-2">
+            <label for="recipe_name" class="text-gray-700">Name</label>
+            <input type="text" id="recipe_name" value="{{recipe.recipe_name}}" name="recipe_name" 
+                class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
 
-    <label for="recipe_description">Description</label>
-    <textarea id="recipe_description" name="recipe_description">{{recipe.recipe_description}}</textarea>
+        <div class="flex flex-col space-y-2">
+            <label for="recipe_description" class="text-gray-700">Description</label>
+            <textarea id="recipe_description" name="recipe_description" 
+                class="p-2 border border-gray-300 rounded-md min-h-[100px] resize-y focus:outline-none focus:ring-2 focus:ring-green-500">{{recipe.recipe_description}}</textarea>
+        </div>
 
-    <label for="recipe_img">Recipe Image</label>
-    <input type="file" id="recipe_img" name="recipe_img">
+        <div class="flex flex-col space-y-2">
+            <label for="recipe_img" class="text-gray-700">Recipe Image</label>
+            <input type="file" id="recipe_img" name="recipe_img" 
+                class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
 
-    <button type="submit">Update Recipe</button>
-</form>
+        <button type="submit" 
+            class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition-colors duration-200">
+            Update Recipe
+        </button>
+    </form>
+</div>
 
 {% endblock content %}
 
