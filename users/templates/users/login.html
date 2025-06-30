@@ -1,28 +1,69 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="border-2 border-primary w-[95%] mx-auto px-4 py-8 my-10 min-[560px]:w-[500px]">
-    <h1 class="text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-8 text-center uppercase">Login</h1>
-    {% if messages %}
-    <ul class="text-red-800 italic border-2 border-red-800 py-4 px-4 bg-white mb-8">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-    </ul>
-    {% endif %}
+<div class="min-h-screen flex items-center justify-center py-8">
+    <div class="container mx-auto px-4 max-w-md">
+        <!-- Login Form -->
+        <div class="bg-white rounded-xl shadow-lg border-2 border-primary/20 p-6 md:p-8">
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4">🍽️</div>
+                <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">Welcome Back!</h1>
+                <p class="text-gray-600">Sign in to your recipe account</p>
+            </div>
 
-    <form action="" method="post" class="flex flex-col">
-        {% csrf_token %}
-        <label for="" class="mb-3">Enter Username</label>
-        <input type="text" name="username" class="mb-8">
-        <label for="" class="mb-3">Enter Password</label>
-        <input type="password" name="password" class="mb-8">
-        <button type="submit" class="bg-primary text-white px-[28px] py-[6px] rounded-[4px]">Login</button>
-    </form>
-    <p class="text-center">
-        <a  href="{% url 'users:register'%}" class="text-primary underline hover:opacity-50 focus:opacity-50">
-            New Here? Register Now.
-       </a>
-    </p>
-</section>
+            <!-- Messages -->
+            {% if messages %}
+            <div class="mb-6">
+                <ul class="bg-red-100 border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm">
+                    {% for message in messages %}
+                    <li class="text-red-700 font-medium">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Login Form -->
+            <form action="" method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Username Field -->
+                <div>
+                    <label for="username" class="block text-gray-800 font-bold mb-3 text-lg">Username</label>
+                    <input type="text" id="username" name="username" required
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-lg"
+                        placeholder="Enter your username...">
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-gray-800 font-bold mb-3 text-lg">Password</label>
+                    <input type="password" id="password" name="password" required
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-lg"
+                        placeholder="Enter your password...">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="w-full bg-primary text-white px-6 py-4 rounded-lg hover:bg-primary/90 transition-all duration-200 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    🔐 Sign In
+                </button>
+            </form>
+
+            <!-- Register Link -->
+            <div class="text-center mt-6 pt-6 border-t-2 border-gray-100">
+                <p class="text-gray-600 mb-3">New to our recipe community?</p>
+                <a href="{% url 'users:register' %}" 
+                    class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-all duration-200 font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    ✨ Create Account
+                </a>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="text-center mt-6">
+            <p class="text-gray-600">Join thousands of food lovers sharing amazing recipes!</p>
+        </div>
+    </div>
+</div>
 {% endblock content %}
