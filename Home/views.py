@@ -59,9 +59,9 @@ def recipe(request, id):
 def delete_recipe(request, id):
     recipe = get_object_or_404(Recipe, id=id, user=request.user)
     
-    if request.method == 'POST':
-        recipe.delete()
-        messages.success(request, 'Post deleted successfully.')
+    # Allow both GET and POST requests for delete operation
+    recipe.delete()
+    messages.success(request, 'Recipe deleted successfully.')
     return redirect('Home:user_recipe')
 
 @login_required
