@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
 </head>
 
-<body class="bg-background lg:text-[18px] flex flex-col">
-    <header class="border-primary border-b-2 ">
+<body class="lg:text-[18px] flex flex-col">
+    <header class=" shadow-md ">
         <nav class="px-4 py-3 flex justify-between items-center relative w-[95%] m-auto">
             <!-- Logo -->
             <a href="{% url 'Home:index'%}"><div class="w-[50px]"><img src="/static/svg/logo.svg" alt="logo"></div></a>
@@ -58,8 +58,8 @@
     {% endblock content %}
     </main>
 
-    <footer id="contact" class="text-center py-[33px] px-[9px] border-primary border-t-2">
-        <p>Copyright belongs to kitchen private limited @2014</p>
+    <footer id="contact" class="text-center py-[33px] px-[9px] border-t border-primary md:px-12 md:py-16 mt-24">
+        <p>Made By Divesh Sanjay Kshirsagar in 2024</p>
         <div class="flex gap-2 justify-center mt-5">
             <div>
                 <img src="/static/svg/instagram.svg" alt="" class="size-6 hover:opacity-50 focus:opacity-50">
